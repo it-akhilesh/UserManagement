@@ -37,6 +37,8 @@ namespace Login_Page.Controllers
 
             if (result.IsSuccess)
             {
+                Session["username"] = result.Username;
+                Session["role"] = result.RoleName;
                 if (result.RoleName == "Admin")
                 {
                     return RedirectToAction("Index", "Admin");

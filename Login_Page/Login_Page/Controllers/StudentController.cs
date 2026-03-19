@@ -11,6 +11,8 @@ namespace Login_Page.Controllers
         // GET: Student
         public ActionResult Index()
         {
+            ViewBag.Username = Session["username"];
+            ViewData["Role"] = Session["role"];
             return View();
         }
     }
