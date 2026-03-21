@@ -17,6 +17,9 @@ namespace BusinessLogiclayer.Requests
         public string PinCode { get; set; }
         public string MobileNo { get; set; }
         public string Email { get; set; }
+        public byte[] fileData { get; set; }
+        public string fileName { get; set; }
+        public string fileType { get; set; }
 
         //[Display(Name = "Upload Photo")]
         //public HttpPostedFileBase Photo { get; set; }

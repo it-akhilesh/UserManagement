@@ -3,6 +3,7 @@ using BusinessLogiclayer.Requests;
 using Login_Page.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -22,20 +23,27 @@ namespace Login_Page.Controllers
             ViewData["Role"] = Session["role"];
             BindDropdownList(stu);
             return View(stu);
-
-
+           
         }
         [HttpPost]
         public async Task<ActionResult> Index(StudentViewModel stu)
         {
             if (ModelState.IsValid)
             {
-                //if (stu.Photo != null && stu.Photo.ContentLength > 0)
-                //{
-                //    string fileName = System.IO.Path.GetFileName(stu.Photo.FileName);
-                //    string path = System.IO.Path.Combine(Server.MapPath("~/Uploads/"), fileName);
-                //    stu.Photo.SaveAs(path);
-                //}
+                byte[] fileData = null;
+                string fileName = null;
+                string fileType = null;
+
+                if (stu.Photo != null && stu.Photo.ContentLength > 0)
+                {
+                    fileName = Path.GetFileName(stu.Photo.FileName);
+                    fileType = stu.Photo.ContentType;
+
+                    using (var binaryReader = new BinaryReader(stu.Photo.InputStream))
+                    {
+                        fileData = binaryReader.ReadBytes(stu.Photo.ContentLength);
+                    }
+                }
 
                 StudentService studentService = new StudentService();
                 Student student = new Student();
@@ -47,6 +55,10 @@ namespace Login_Page.Controllers
                 student.PinCode = stu.PinCode;
                 student.MobileNo = stu.MobileNo;
                 student.Email = stu.Email;
+                student.fileData = fileData;
+                student.fileName = fileName;
+                student.fileType = fileType;
+                
                 var result = await studentService.Register(student);
                 if(result)
                 {

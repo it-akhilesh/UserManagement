@@ -28,6 +28,10 @@ namespace UserManagement.Models.stu
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
 
+        public byte[] fileData { get; set; }
+        public string fileName { get; set; }
+        public string fileType { get; set; }
+
         //[Display(Name = "Upload Photo")]
         //public HttpPostedFileBase Photo { get; set; }
     }
