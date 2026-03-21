@@ -113,6 +113,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Requests\LoginRequest.cs" />
+    <Compile Include="Models\StudentViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
