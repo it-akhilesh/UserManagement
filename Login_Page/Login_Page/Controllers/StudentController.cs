@@ -1,8 +1,11 @@
-﻿using Login_Page.Models;
+﻿using BusinessLogiclayer;
+using BusinessLogiclayer.Requests;
+using Login_Page.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -23,26 +26,44 @@ namespace Login_Page.Controllers
 
         }
         [HttpPost]
-        public ActionResult Index(StudentViewModel stu)
+        public async Task<ActionResult> Index(StudentViewModel stu)
         {
             if (ModelState.IsValid)
             {
-                if (stu.Photo != null && stu.Photo.ContentLength > 0)
+                //if (stu.Photo != null && stu.Photo.ContentLength > 0)
+                //{
+                //    string fileName = System.IO.Path.GetFileName(stu.Photo.FileName);
+                //    string path = System.IO.Path.Combine(Server.MapPath("~/Uploads/"), fileName);
+                //    stu.Photo.SaveAs(path);
+                //}
+
+                StudentService studentService = new StudentService();
+                Student student = new Student();
+                student.Name = stu.Name;
+                student.Address = stu.Address;
+                student.Country = stu.Country;
+                student.State = stu.State;
+                student.City = stu.City;
+                student.PinCode = stu.PinCode;
+                student.MobileNo = stu.MobileNo;
+                student.Email = stu.Email;
+                var result = await studentService.Register(student);
+                if(result)
                 {
-                    string fileName = System.IO.Path.GetFileName(stu.Photo.FileName);
-                    string path = System.IO.Path.Combine(Server.MapPath("~/Uploads/"), fileName);
-                    stu.Photo.SaveAs(path);
+                    TempData["Message"] = "Student registered successfully!";
                 }
-                //Call business logic to save student data to the database here
+                else
+                {
+                    TempData["Message"] = "Failed to register student";
+                }
+
+                //Call business logic to save student data into the database here
                 return RedirectToAction("Index");
             }
 
             BindDropdownList(stu);
 
             return View(stu);
-            // Here you can save the student data to the database or perform other actions
-
-
         }
 
         private static void BindDropdownList(StudentViewModel stu)

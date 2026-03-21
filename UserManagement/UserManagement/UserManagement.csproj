@@ -91,17 +91,23 @@
     <Compile Include="App_Start\ValidateModelAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Data\IStudentRepository.cs" />
     <Compile Include="Data\IUserRepository.cs" />
     <Compile Include="Data\SqlUserRepository.cs" />
+    <Compile Include="Data\StudentRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Dto\UserLoginInfo.cs" />
     <Compile Include="Models\Requests\LoginRequest.cs" />
     <Compile Include="Models\Responses\AuthResponse.cs" />
+    <Compile Include="Models\Requests\StudentRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\IAuthService.cs" />
+    <Compile Include="Services\IStudentService.cs" />
+    <Compile Include="Services\StudentService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

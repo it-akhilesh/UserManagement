@@ -31,7 +31,7 @@ namespace Login_Page.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(LoginModel model)
         {
-            Login obj = new Login();
+            LoginService obj = new LoginService();
 
             var result = await obj.GetLogin(model.UserName, model.UserPassword);
 

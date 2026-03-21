@@ -8,7 +8,8 @@ using Newtonsoft.Json;
 
 namespace BusinessLogiclayer
 {
-    public class Login
+    public class LoginService
+
     {
         public async Task<UserInfo> GetLogin(string username1, string password1)
         {
