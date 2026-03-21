@@ -17,7 +17,36 @@ namespace Login_Page.Controllers
 
             ViewBag.Username = Session["username"];
             ViewData["Role"] = Session["role"];
+            BindDropdownList(stu);
+            return View(stu);
 
+
+        }
+        [HttpPost]
+        public ActionResult Index(StudentViewModel stu)
+        {
+            if (ModelState.IsValid)
+            {
+                if (stu.Photo != null && stu.Photo.ContentLength > 0)
+                {
+                    string fileName = System.IO.Path.GetFileName(stu.Photo.FileName);
+                    string path = System.IO.Path.Combine(Server.MapPath("~/Uploads/"), fileName);
+                    stu.Photo.SaveAs(path);
+                }
+                //Call business logic to save student data to the database here
+                return RedirectToAction("Index");
+            }
+
+            BindDropdownList(stu);
+
+            return View(stu);
+            // Here you can save the student data to the database or perform other actions
+
+
+        }
+
+        private static void BindDropdownList(StudentViewModel stu)
+        {
             stu.CountryList = new List<SelectListItem>
                 {
                     new SelectListItem { Value = "India", Text = "India" },
@@ -33,10 +62,6 @@ namespace Login_Page.Controllers
                     new SelectListItem { Value = "lko", Text = "Lucknow" },
                     new SelectListItem { Value = "Mana", Text = "Manali" },
                 };
-
-            return View(stu);
-
-
         }
     }
 }
