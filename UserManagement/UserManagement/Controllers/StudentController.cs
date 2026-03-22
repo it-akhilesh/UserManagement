@@ -26,7 +26,7 @@ namespace UserManagement.Controllers
         }
 
         [HttpPost]
-        [Route("create")]
+        [Route("Create")]
         public IHttpActionResult CreateStudent(StudentRequest student)
         {
             if (student == null)

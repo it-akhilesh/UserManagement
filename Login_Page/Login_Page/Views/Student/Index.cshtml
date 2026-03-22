@@ -193,10 +193,37 @@
             $("#btnSubmit").click(
                 function () {
                     clearErrors();
-                    if (!validateForm())
-                    {
+                    if (!validateForm()) {
                         return false
-                    };
+                    }
+                    else {
+                        var formData = new FormData();
+                        formData.append("Name", $("#Name").val());
+                        formData.append("Address", $("#Address").val());
+                        formData.append("Country", $("#Country").val());
+                        formData.append("State", $("#State").val());
+                        formData.append("City", $("#City").val());
+                        formData.append("PinCode", $("#PinCode").val());
+                        formData.append("MobileNo", $("#MobileNo").val());
+                        formData.append("Email", $("#Email").val());
+
+                        formData.append("Photo", $("#Photo")[0].files[0]);
+
+                        $.ajax({
+                            url: "/Student/Index",
+                            type: "POST",
+                            data: formData,
+                            contentType: false,   // ✅ Must for file upload
+                            processData: false,   // ✅ Must for file upload
+                            success: function (res) {
+                                console.log(res);
+                            },
+                            error: function () {
+                                console.log("Something went wrong!");
+                            }
+                        });
+                        return false
+                    }
                 
                 }
             );
