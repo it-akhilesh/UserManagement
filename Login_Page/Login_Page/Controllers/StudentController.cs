@@ -45,7 +45,7 @@ namespace Login_Page.Controllers
                     }
                 }
 
-                StudentService studentService = new StudentService();
+                
                 Student student = new Student();
                 student.Name = stu.Name;
                 student.Address = stu.Address;
@@ -58,8 +58,11 @@ namespace Login_Page.Controllers
                 student.fileData = fileData;
                 student.fileName = fileName;
                 student.fileType = fileType;
-                
+
+
+                StudentService studentService = new StudentService();
                 var result = await studentService.Register(student);
+
                 if(result)
                 {
                     TempData["Message"] = "Student registered successfully!";
