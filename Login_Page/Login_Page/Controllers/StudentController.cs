@@ -81,6 +81,57 @@ namespace Login_Page.Controllers
             return View(stu);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Save(StudentViewModel stu)
+        {
+            if (ModelState.IsValid)
+            {
+                byte[] fileData = null;
+                string fileName = null;
+                string fileType = null;
+
+                if (stu.Photo != null && stu.Photo.ContentLength > 0)
+                {
+                    fileName = Path.GetFileName(stu.Photo.FileName);
+                    fileType = stu.Photo.ContentType;
+
+                    using (var binaryReader = new BinaryReader(stu.Photo.InputStream))
+                    {
+                        fileData = binaryReader.ReadBytes(stu.Photo.ContentLength);
+                    }
+                }
+
+
+                Student student = new Student();
+                student.Name = stu.Name;
+                student.Address = stu.Address;
+                student.Country = stu.Country;
+                student.State = stu.State;
+                student.City = stu.City;
+                student.PinCode = stu.PinCode;
+                student.MobileNo = stu.MobileNo;
+                student.Email = stu.Email;
+                student.fileData = fileData;
+                student.fileName = fileName;
+                student.fileType = fileType;
+
+
+                StudentService studentService = new StudentService();
+                var result = await studentService.Register(student);
+                if (result)
+                {
+                    return Json(new { success = true, message = "Student saved successfully." });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed to save student." });
+                
+                }
+            }
+            return Json(new { success = false, message = "Failed to save student." });
+        }
+
+
         private static void BindDropdownList(StudentViewModel stu)
         {
             stu.CountryList = new List<SelectListItem>

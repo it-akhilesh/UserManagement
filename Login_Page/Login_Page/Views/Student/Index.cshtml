@@ -13,6 +13,13 @@
 @using (Html.BeginForm("Index", "Student", FormMethod.Post,
     new { enctype = "multipart/form-data" }))
 {
+    <div id="alertSuccess" class="alert alert-success" role="alert">
+       Student information saved successfully. 
+    </div>
+    <div id="alertError" class="alert alert-danger" role="alert">
+        Something went wrong while saving student information. Please try again.    
+    </div>
+
     <div class="form-group">
         <div class="row align-items-center mb-3">
             @Html.LabelFor(model => model.Name, "Name", new { @class = "col-sm-2 col-form-label" })
@@ -102,12 +109,15 @@
             </div>
         </div>
 
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 @*<input type="submit" id="btnSubmit" class="btn btn-primary mb-3" />*@
-                <button id="btnSubmit" class="btn btn-primary mb-3" >Save</button>
+                <button id="btnSubmit" class="btn btn-primary mb-3">Save</button>
+
             </div>
         </div>
+
 
     </div>
 }
@@ -118,6 +128,8 @@
         $(document).ready(function () {
             //alert("Alert Message")
             //console.log("Hey This console message")
+            $("#alertSuccess").hide();
+            $("#alertError").hide();
 
             function clearErrors() {
                 $("#NameError").text("");
@@ -136,7 +148,7 @@
 
                 $("#EmailError").text("");
 
-                $("#PhotoError").text( "");
+                $("#PhotoError").text("");
 
             }
 
@@ -190,8 +202,7 @@
                 return isValid;
             }
 
-            $("#btnSubmit").click(
-                function () {
+            $("#btnSubmit").click(function () {
                     clearErrors();
                     if (!validateForm()) {
                         return false
@@ -210,21 +221,23 @@
                         formData.append("Photo", $("#Photo")[0].files[0]);
 
                         $.ajax({
-                            url: "/Student/Index",
+                            url: "/Student/Save",
                             type: "POST",
                             data: formData,
                             contentType: false,   // ✅ Must for file upload
                             processData: false,   // ✅ Must for file upload
                             success: function (res) {
                                 console.log(res);
+                                $("#alertSuccess").show();
                             },
                             error: function () {
                                 console.log("Something went wrong!");
+                                $("#alertError").show();
                             }
                         });
                         return false
                     }
-                
+
                 }
             );
 
