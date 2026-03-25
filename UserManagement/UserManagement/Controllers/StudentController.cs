@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using UserManagement.Data;
+using UserManagement.Models.Responses;
 using UserManagement.Models.stu;
 using UserManagement.Services;
 
@@ -34,6 +35,17 @@ namespace UserManagement.Controllers
                 return BadRequest("Student data is required.");
             }
             var result = _studentService.Save(student);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("GetAll")]
+        public IHttpActionResult GetAllStudents()
+        
+        {
+            
+            List<Student> students = new List<Student>();
+            var result = _studentService.GetAllStudents();
             return Ok(result);
         }
     }

@@ -27,5 +27,12 @@ namespace UserManagement.Services
 
             return _studentRepository.StudentInsert(student);
         }
+
+        public List<Student> GetAllStudents()
+        {
+            var students = _studentRepository.GetAllStudents();
+            
+            return students;
+        }
     }
 }

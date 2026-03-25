@@ -103,6 +103,7 @@
     <Compile Include="Models\Requests\LoginRequest.cs" />
     <Compile Include="Models\Responses\AuthResponse.cs" />
     <Compile Include="Models\Requests\StudentRequest.cs" />
+    <Compile Include="Models\Responses\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\IAuthService.cs" />

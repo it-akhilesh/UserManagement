@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using UserManagement.Models.Responses;
 using UserManagement.Models.stu;
 
 namespace UserManagement.Data
@@ -9,5 +10,8 @@ namespace UserManagement.Data
     public interface IStudentRepository
     {
         bool StudentInsert(StudentRequest student);
+       
+        List<Student> GetAllStudents();
+   
     }
 }

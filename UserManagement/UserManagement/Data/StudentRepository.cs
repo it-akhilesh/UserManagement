@@ -5,12 +5,42 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using UserManagement.Models.Dto;
+using UserManagement.Models.Responses;
 using UserManagement.Models.stu;
 
 namespace UserManagement.Data
 {
     public class StudentRepository : IStudentRepository
     {
+        public List<Student> GetAllStudents()
+        {
+            var students = new List<Student>();
+            var connectionString = ConfigurationManager.ConnectionStrings["UserDbConnection"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT Name, Address, MobileNo, fileName FROM Students";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var student = new Student
+                            {
+                                Name = reader["Name"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                MobileNo = reader["MobileNo"].ToString(),
+                                fileName = reader["fileName"] != DBNull.Value ? reader["fileName"].ToString() : null
+                            };
+                            students.Add(student);
+                        }
+                    }
+                }
+            }
+            return students;
+        }
+
         public bool StudentInsert(StudentRequest student)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["UserDbConnection"].ConnectionString;
@@ -41,5 +71,6 @@ namespace UserManagement.Data
         }
 
         
+
     }
 }
